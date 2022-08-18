@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Demo</title>
+<script src="./sortable_tree_bundle.js"></script>
+<link rel="stylesheet" type="text/css" href="./sortable_tree_bundle.css">
+</head>
+<body>
+
+<div id="root"></div>
+
+<script>
+const flattree = [
+  { id: '1', name: 'N1', parent: null },
+  { id: '2', name: 'N2', parent: null },
+  { id: '3', name: 'N3', parent: 2 },
+  { id: '4', name: 'N4', parent: 3 },
+];
+var App = ST.ReactContentRenderer.render({flattree: flattree}, document.getElementById('root'));
+console.log(App.getData()); // How to get modified tree out of component
+</script>
+
+</body>
+</html>
