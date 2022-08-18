@@ -23,3 +23,5 @@ you need to downgrade Node.JS to Long Term Support(LTS). Do the following (based
 ```
 
 See `dist/index.html` for how to use the bundle.
+
+Note: The structure of this package is based on https://github.com/gooddata/ui-sdk-examples/tree/master/vanillajs. Essentially, this is a working example of how to embed a React app in a JavaScript-only framework.
