@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import SortableTree, { getFlatDataFromTree, getTreeFromFlatData } from 'react-sortable-tree';
+import SortableTree, { getFlatDataFromTree, getTreeFromFlatData, addNodeUnderParent, removeNodeAtPath, changeNodeAtPath } from 'react-sortable-tree';
 import 'react-sortable-tree/style.css'; // This only needs to be imported once in your app
 
 class App extends Component {
@@ -34,11 +34,81 @@ class App extends Component {
   }
 
   render() {
+    const getNodeKey = ({ treeIndex }) => treeIndex;
     return (
-      <div style={{ height: 400 }}>
+      <div style={{ height: 800 }}>
         <SortableTree
           treeData={this.state.treeData}
           onChange={treeData => this.setState({ treeData })}
+          generateNodeProps={({ node, path }) => ({
+            title: (
+              <input
+                value={node.name}
+                onChange={event => {
+                  const name = event.target.value;
+
+                  this.setState(state => ({
+                    treeData: changeNodeAtPath({
+                      treeData: state.treeData,
+                      path,
+                      getNodeKey,
+                      newNode: { ...node, name },
+                    }),
+                  }));
+                }}
+              />
+            ),
+            subtitle: (
+              <input
+                value={node.subtitle}
+                onChange={event => {
+                  const subtitle = event.target.value;
+
+                  this.setState(state => ({
+                    treeData: changeNodeAtPath({
+                      treeData: state.treeData,
+                      path,
+                      getNodeKey,
+                      newNode: { ...node, subtitle },
+                    }),
+                  }));
+                }}
+              />
+            ),
+            buttons: [
+              <button
+                class="st-btn add-child"
+                onClick={() =>
+                  this.setState(state => ({
+                    treeData: addNodeUnderParent({
+                      treeData: state.treeData,
+                      parentKey: path[path.length - 1],
+                      expandParent: true,
+                      getNodeKey,
+                      newNode: {
+                        title: '',
+                      },
+                      addAsFirstChild: state.addAsFirstChild,
+                    }).treeData,
+                  }))
+                }
+              >
+              </button>,
+              <button
+                class="st-btn remove-child"
+                onClick={() =>
+                  this.setState(state => ({
+                    treeData: removeNodeAtPath({
+                      treeData: state.treeData,
+                      path,
+                      getNodeKey,
+                    }),
+                  }))
+                }
+              >
+              </button>,
+            ],
+          })}
         />
       </div>
     );
