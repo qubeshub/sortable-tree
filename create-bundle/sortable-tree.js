@@ -10,7 +10,7 @@ class App extends Component {
 
     this.state = {
       treeData: getTreeFromFlatData({
-        flatData: props.flattree.map(node => ({ ...node, title: node.name })),
+        flatData: props.flattree.map(node => ({ ...node, title: node.name, subtitle: node.subtitle })),
         getKey: node => node.id, // resolve a node's key
         getParentKey: node => node.parent, // resolve a node's parent's key
         rootKey: null, // The value of the parent key when there is no parent (i.e., at root level)
@@ -26,6 +26,7 @@ class App extends Component {
     }).map(({ node, path }) => ({
       id: node.id,
       name: node.name,
+      subtitle: node.subtitle,
 
       // The last entry in the path is this node's key
       // The second to last entry (accessed here) is the parent node's key
@@ -77,7 +78,7 @@ class App extends Component {
             ),
             buttons: [
               <button
-                class="st-btn add-child"
+                className="st-btn add-child"
                 onClick={() =>
                   this.setState(state => ({
                     treeData: addNodeUnderParent({
@@ -86,7 +87,8 @@ class App extends Component {
                       expandParent: true,
                       getNodeKey,
                       newNode: {
-                        title: '',
+                        name: '',
+                        subtitle: ''
                       },
                       addAsFirstChild: state.addAsFirstChild,
                     }).treeData,
@@ -95,7 +97,7 @@ class App extends Component {
               >
               </button>,
               <button
-                class="st-btn remove-child"
+                className="st-btn remove-child"
                 onClick={() =>
                   this.setState(state => ({
                     treeData: removeNodeAtPath({
