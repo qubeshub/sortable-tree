@@ -6,7 +6,7 @@ import 'react-sortable-tree/style.css'; // This only needs to be imported once i
 class App extends Component {
   constructor(props) {
     super(props);
-    this.steve = React.createRef();
+    this.newNodeId = 0;
 
     this.state = {
       treeData: getTreeFromFlatData({
@@ -87,6 +87,7 @@ class App extends Component {
                       expandParent: true,
                       getNodeKey,
                       newNode: {
+                        id: (--this.newNodeId).toString(),
                         name: '',
                         subtitle: ''
                       },
