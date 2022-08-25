@@ -1,8 +1,10 @@
 # Sortable tree
 
+This repo creates a standalone JavaScript library of [react-sortable-tree](https://github.com/frontend-collective/react-sortable-tree).
+
 The bundle can be created using the `sortable-tree.js` file in the `create-bundle` folder, simply by running:
 
-1. `yarn && yarn dist`
+```yarn && yarn dist```
 
 If you run into the following error
 
